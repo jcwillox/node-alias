@@ -1,0 +1,73 @@
+name: "Release"
+
+on:
+  push:
+    branches:
+      - "beta"
+      - "alpha"
+  workflow_dispatch:
+    inputs:
+      draft:
+        type: boolean
+        description: "Draft release"
+        default: false
+      discussion:
+        type: boolean
+        description: "Create discussion"
+        default: false
+      release_type:
+        type: choice
+        description: "Release type"
+        default: "auto"
+        options:
+          - "auto"
+          - "patch"
+          - "minor"
+          - "major"
+
+env:
+  # renovate: datasource=github-releases depName=goreleaser packageName=goreleaser/goreleaser
+  GORELEASER_VERSION: 2.6.1
+
+jobs:
+  publish:
+    name: "Publish"
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+      pull-requests: write
+    steps:
+      - name: "Checkout the repository"
+        uses: actions/checkout@v4
+
+      - name: "Setup pnpm"
+        uses: pnpm/action-setup@v4
+        with:
+          version: "latest"
+
+      - name: "Setup node"
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
+      - name: "Setup go"
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: "Run GoReleaser"
+        uses: goreleaser/goreleaser-action@v6
+        with:
+          version: ${{ env.GORELEASER_VERSION }}
+          install-only: true
+
+      - name: "Release Package 📦"
+        run: pnpm dlx @jcwillox/semantic-release-config
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SEMANTIC_RELEASE_GITHUB_DRAFT: ${{ inputs.draft }}
+          SEMANTIC_RELEASE_GITHUB_DISCUSSION: ${{ inputs.discussion }}
+          SEMANTIC_RELEASE_FORCE_RELEASE: ${{ inputs.release_type }}
+          SEMANTIC_RELEASE_CMD_PRE_PUBLISH: "goreleaser release --clean"
+          SEMANTIC_RELEASE_GITHUB_ASSETS: '["dist/checksums.txt", "dist/*.apk", "dist/*.deb", "dist/*.rpm", "dist/*.tar.gz", "dist/*.zip"]'

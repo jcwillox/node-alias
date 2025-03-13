@@ -1,0 +1,50 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+version: 2
+
+release:
+  disable: true
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - windows
+      - darwin
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{.Version}}
+
+archives:
+  - formats: tar.gz
+    name_template: >-
+      {{ replace .ProjectName "-" "_" }}_
+      {{- .Version }}_
+      {{- .Os }}_
+      {{- .Arch }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+    # use zip for windows archives
+    format_overrides:
+      - goos: windows
+        formats: zip
+
+nfpms:
+  - file_name_template: '{{ replace .ProjectName "-" "_" }}_{{ .Version }}_{{ .Arch }}'
+    license: MIT
+    maintainer: Joshua Cowie-Willox <joshwillox@gmail.com>
+    homepage: https://github.com/jcwillox/node-alias
+    description: "A smart alias for all node package managers"
+    bindir: /usr/bin
+    formats:
+      - apk
+      - rpm
+      - deb
+
+checksum:
+  name_template: 'checksums.txt'

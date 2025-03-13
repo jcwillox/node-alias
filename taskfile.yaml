@@ -1,0 +1,20 @@
+version: '3'
+
+tasks:
+  build:
+    cmd: go build
+    sources:
+        - main.go
+        - go.mod
+        - go.sum
+        - cmd/**/*.go
+        - utils/**/*.go
+
+  build:linux:
+    env:
+      GOOS: linux
+      GOARCH: amd64
+    cmd: go build
+
+  build:all:
+    cmd: goreleaser release --clean --snapshot
