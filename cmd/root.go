@@ -1,7 +1,8 @@
 package cmd
 
 import (
-	"github.com/jcwillox/node-alias/utils"
+	"github.com/jcwillox/node-alias/constants"
+	. "github.com/jcwillox/node-alias/utils"
 	"github.com/spf13/cobra"
 	"path/filepath"
 	"slices"
@@ -20,12 +21,12 @@ var rootCmd = &cobra.Command{
 	},
 	Run: func(cmd *cobra.Command, remaining []string) {
 		var args []string
-		manager := utils.GetPackageManager()
+		manager := GetPackageManager()
 
 		if len(remaining) == 0 {
-			if utils.CmdExists("tsx") {
+			if CmdExists("tsx") {
 				manager = "tsx"
-			} else if utils.CmdExists("bun") {
+			} else if CmdExists("bun") {
 				manager = "bun"
 				args = []string{"repl"}
 			} else {
@@ -33,7 +34,28 @@ var rootCmd = &cobra.Command{
 			}
 		}
 
-		utils.RunCommand(manager, args, remaining...)
+		if len(remaining) > 0 {
+			if ext := filepath.Ext(remaining[0]); ext != "" {
+				if slices.Contains(constants.NodeExtensions, ext) {
+					if CmdExists("tsx") {
+						manager = "tsx"
+					} else if CmdExists("bun") {
+						manager = "bun"
+					} else {
+						manager = "node"
+					}
+				} else if ext == ".py" {
+					if CmdExists("uv") {
+						manager = "uv"
+						args = []string{"run"}
+					} else if CmdExists("python") {
+						manager = "python"
+					}
+				}
+			}
+		}
+
+		RunCommand(manager, args, remaining...)
 	},
 }
 
@@ -58,7 +80,7 @@ func init() {
 			Use:                use,
 			Aliases:            []string{alias},
 			DisableFlagParsing: true,
-			Run:                utils.DefaultRunCommand,
+			Run:                DefaultRunCommand,
 		})
 	}
 }
