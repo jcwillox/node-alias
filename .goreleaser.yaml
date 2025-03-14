@@ -45,6 +45,13 @@ nfpms:
       - apk
       - rpm
       - deb
+    contents:
+      - src: completions/node-alias.zsh
+        dst: /usr/share/zsh/vendor-completions/_node-alias
+      - src: completions/node-alias.fish
+        dst: /usr/share/fish/vendor_completions.d/node-alias.fish
+      - src: completions/node-alias.bash
+        dst: /etc/bash_completion.d/node-alias
 
 checksum:
   name_template: 'checksums.txt'

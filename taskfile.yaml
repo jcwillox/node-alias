@@ -1,14 +1,20 @@
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
 version: '3'
+
+interval: 500ms
 
 tasks:
   build:
     cmd: go build
+
+  build:watch:
+    cmd: go build
+    watch: true
     sources:
-        - main.go
-        - go.mod
-        - go.sum
-        - cmd/**/*.go
-        - utils/**/*.go
+      - '**/*.go'
+    generates:
+      - node-alias{{exeExt}}
+    method: timestamp
 
   build:linux:
     env:
@@ -18,3 +24,12 @@ tasks:
 
   build:all:
     cmd: goreleaser release --clean --snapshot
+
+  gen:completions:
+    desc: Regenerate completion files
+    cmds:
+      - go build
+      - node-alias{{exeExt}} completion bash > ./completions/node-alias.bash
+      - node-alias{{exeExt}} completion zsh > ./completions/node-alias.zsh
+      - node-alias{{exeExt}} completion fish > ./completions/node-alias.fish
+      - node-alias{{exeExt}} completion powershell > ./completions/node-alias.ps1
