@@ -35,6 +35,9 @@ func GuessPackageManager() string {
 }
 
 func GetPackageManager() string {
+	if manager := os.Getenv("NODE_ALIAS_MANAGER"); manager != "" {
+		return manager
+	}
 	manager := GetCorepackManager()
 	if manager != "" {
 		return manager
