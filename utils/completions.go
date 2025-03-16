@@ -11,13 +11,13 @@ func CompleteDependencies(_ *cobra.Command, args []string, _ string) ([]cobra.Co
 	completions := make([]cobra.Completion, 0, len(pkg.Scripts))
 
 	for dep, version := range pkg.Dependencies {
-		completions = append(completions, cobra.CompletionWithDesc(dep, dep+":"+version))
+		completions = append(completions, cobra.CompletionWithDesc(dep, version))
 	}
 	for dep, version := range pkg.DevDependencies {
-		completions = append(completions, cobra.CompletionWithDesc(dep, dep+":"+version))
+		completions = append(completions, cobra.CompletionWithDesc(dep, version))
 	}
 	for dep, version := range pkg.PeerDependencies {
-		completions = append(completions, cobra.CompletionWithDesc(dep, dep+":"+version))
+		completions = append(completions, cobra.CompletionWithDesc(dep, version))
 	}
 
 	return completions, cobra.ShellCompDirectiveDefault

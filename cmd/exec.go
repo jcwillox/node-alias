@@ -6,6 +6,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"runtime"
 )
 
 var execCmd = &cobra.Command{
@@ -29,10 +30,11 @@ var execCmd = &cobra.Command{
 			if entry.IsDir() || filepath.Ext(entry.Name()) != "" {
 				continue
 			}
-			completions = append(
-				completions,
-				cobra.CompletionWithDesc(entry.Name(), path.Join("node_modules/.bin", entry.Name())),
-			)
+			description := ""
+			if runtime.GOOS == "windows" {
+				description = path.Join("node_modules/.bin", entry.Name())
+			}
+			completions = append(completions, cobra.CompletionWithDesc(entry.Name(), description))
 		}
 
 		return completions, cobra.ShellCompDirectiveDefault
