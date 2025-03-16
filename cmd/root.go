@@ -24,11 +24,11 @@ var rootCmd = &cobra.Command{
 		manager := GetPackageManager()
 
 		if len(remaining) == 0 {
-			if CmdExists("tsx") {
-				manager = "tsx"
-			} else if CmdExists("bun") {
+			if CmdExists("bun") {
 				manager = "bun"
 				args = []string{"repl"}
+			} else if CmdExists("tsx") {
+				manager = "tsx"
 			} else {
 				manager = "node"
 			}
@@ -81,6 +81,7 @@ func init() {
 		"publish":        "publish",
 		"pack":           "pack",
 	}
+
 	for use, alias := range commands {
 		rootCmd.AddCommand(&cobra.Command{
 			Use:                use,
