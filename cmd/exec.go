@@ -13,6 +13,10 @@ var execCmd = &cobra.Command{
 	Aliases:            []string{"x"},
 	DisableFlagParsing: true,
 	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]cobra.Completion, cobra.ShellCompDirective) {
+		if len(args) > 0 {
+			return nil, cobra.ShellCompDirectiveDefault
+		}
+
 		pkg := utils.GetPackageJson()
 		completions := make([]cobra.Completion, 0, len(pkg.Scripts))
 
