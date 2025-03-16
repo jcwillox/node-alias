@@ -18,6 +18,8 @@ var outdatedCmd = &cobra.Command{
 			if len(remaining) == 0 {
 				args = []string{"-l", "-I", "-r"}
 			}
+		} else {
+			args = []string{"outdated"}
 		}
 
 		utils.RunCommand(manager, args, remaining...)

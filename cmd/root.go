@@ -64,7 +64,13 @@ func Execute() error {
 }
 
 func init() {
-	// TODO does start or test need to be special?
+	rootCmd.SetHelpCommand(&cobra.Command{
+		Use:                "help",
+		Aliases:            []string{"h"},
+		DisableFlagParsing: true,
+		Run:                DefaultRunCommand,
+	})
+
 	commands := map[string]string{
 		"install":        "i",
 		"list":           "ls",
