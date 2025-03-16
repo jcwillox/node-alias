@@ -18,7 +18,7 @@ func CmdExists(cmd string) bool {
 func GuessPackageManager() string {
 	if FileExists("pnpm-lock.yaml") {
 		return "pnpm"
-	} else if FileExists("bun.lockb") {
+	} else if FileExists("bun.lock") || FileExists("bun.lockb") {
 		return "bun"
 	} else if FileExists("yarn.lock") {
 		return "yarn"
