@@ -73,7 +73,6 @@ func init() {
 
 	commands := map[string]string{
 		"install":        "i",
-		"list":           "ls",
 		"start":          "s",
 		"test":           "t",
 		"lint":           "l",
