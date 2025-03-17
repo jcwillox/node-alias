@@ -22,6 +22,12 @@ tasks:
       GOARCH: amd64
     cmd: go build
 
+  build:darwin:
+    env:
+      GOOS: darwin
+      GOARCH: arm64
+    cmd: go build
+
   build:all:
     cmd: goreleaser release --clean --snapshot
 
