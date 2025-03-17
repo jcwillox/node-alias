@@ -38,3 +38,7 @@ func RunAliasCommand(name string, alias string, args []string, remaining ...stri
 func DefaultRunCommand(cmd *cobra.Command, remaining []string) {
 	RunCommand(GetPackageManager(), []string{cmd.Use}, remaining...)
 }
+
+func RunScriptCommand(cmd *cobra.Command, remaining []string) {
+	RunCommand(GetPackageManager(), []string{"run", cmd.Use}, remaining...)
+}

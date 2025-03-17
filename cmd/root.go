@@ -73,9 +73,6 @@ func init() {
 
 	commands := map[string]string{
 		"install":        "i",
-		"start":          "s",
-		"test":           "t",
-		"lint":           "l",
 		"approve-builds": "ab",
 		"publish":        "publish",
 		"pack":           "pack",
@@ -87,6 +84,22 @@ func init() {
 			Aliases:            []string{alias},
 			DisableFlagParsing: true,
 			Run:                DefaultRunCommand,
+		})
+	}
+
+	scriptCommands := map[string]string{
+		"dev":   "d",
+		"start": "s",
+		"test":  "t",
+		"lint":  "l",
+	}
+
+	for use, alias := range scriptCommands {
+		rootCmd.AddCommand(&cobra.Command{
+			Use:                use,
+			Aliases:            []string{alias},
+			DisableFlagParsing: true,
+			Run:                RunScriptCommand,
 		})
 	}
 }
