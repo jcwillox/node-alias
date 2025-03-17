@@ -44,7 +44,7 @@ var execCmd = &cobra.Command{
 		manager := utils.GetPackageManager()
 
 		if len(remaining) > 0 {
-			bin := path.Join("./node_modules/.bin/", remaining[0])
+			bin := filepath.Join("./node_modules/.bin/", remaining[0])
 
 			if _, err := os.Stat(bin); err == nil {
 				utils.RunAliasCommand(bin, remaining[0], remaining[1:])
