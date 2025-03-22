@@ -19,6 +19,16 @@ var rootCmd = &cobra.Command{
 	Args: func(cmd *cobra.Command, args []string) error {
 		return nil
 	},
+	ValidArgsFunction: func(cmd *cobra.Command, args []string, toComplete string) ([]cobra.Completion, cobra.ShellCompDirective) {
+		commands := cmd.Commands()
+		completions := make([]cobra.Completion, 0, len(commands))
+		for _, command := range commands {
+			if !command.Hidden {
+				completions = append(completions, command.Name())
+			}
+		}
+		return completions, cobra.ShellCompDirectiveDefault
+	},
 	Run: func(cmd *cobra.Command, remaining []string) {
 		var args []string
 		manager := GetPackageManager()
