@@ -16,7 +16,7 @@ func RunCommand(name string, args []string, remaining ...string) {
 func RunAliasCommand(name string, alias string, args []string, remaining ...string) {
 	args = append(args, remaining...)
 
-	fmt.Printf("\x1b[90m$ %s %s\x1b[0m\n", alias, strings.Join(args, " "))
+	_, _ = fmt.Fprintf(os.Stderr, "\x1b[90m$ %s %s\x1b[0m\n", alias, strings.Join(args, " "))
 
 	cmd := execabs.Command(name, args...)
 	cmd.Stdin = os.Stdin
