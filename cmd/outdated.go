@@ -17,6 +17,8 @@ var outdatedCmd = &cobra.Command{
 			manager = "taze"
 			if len(remaining) == 0 {
 				args = []string{"-l", "-I", "-r"}
+			} else if len(remaining) == 1 && remaining[0] == "-g" {
+				args = []string{"-l", "-I"}
 			}
 		} else {
 			args = []string{"outdated"}
