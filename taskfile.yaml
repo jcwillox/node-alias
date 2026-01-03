@@ -35,7 +35,7 @@ tasks:
     desc: Regenerate completion files
     cmds:
       - go build
-      - node-alias{{exeExt}} completion bash > ./completions/node-alias.bash
-      - node-alias{{exeExt}} completion zsh > ./completions/node-alias.zsh
-      - node-alias{{exeExt}} completion fish > ./completions/node-alias.fish
-      - node-alias{{exeExt}} completion powershell > ./completions/node-alias.ps1
+      - ./node-alias{{exeExt}} completion bash > ./completions/node-alias.bash
+      - ./node-alias{{exeExt}} completion zsh > ./completions/node-alias.zsh
+      - ./node-alias{{exeExt}} completion fish > ./completions/node-alias.fish
+      - ./node-alias{{exeExt}} completion powershell > ./completions/node-alias.ps1
