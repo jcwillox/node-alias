@@ -12,11 +12,11 @@ You can download the latest release from the [releases page](https://github.com/
 ### Script
 
 ```bash
-sh -c "$(curl -fsSL jcwillox.com/l/node)"
+sh -c "$(curl -fsSL jcwillox.com/l/node-alias)"
 ```
 
 Windows
 
 ```powershell
-iwr -useb jcwillox.com/l/node-ps1 | iex
+iwr -useb jcwillox.com/l/node-alias-ps1 | iex
 ```
