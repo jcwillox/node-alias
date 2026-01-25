@@ -1,11 +1,12 @@
 package cmd
 
 import (
+	"path/filepath"
+	"slices"
+
 	"github.com/jcwillox/node-alias/constants"
 	. "github.com/jcwillox/node-alias/utils"
 	"github.com/spf13/cobra"
-	"path/filepath"
-	"slices"
 )
 
 var rootCmd = &cobra.Command{
@@ -45,7 +46,10 @@ var rootCmd = &cobra.Command{
 		}
 
 		if len(remaining) > 0 {
-			if ext := filepath.Ext(remaining[0]); ext != "" {
+			if mgr, shebangArgs := GetShebang(remaining[0]); mgr != "" && CmdExists(mgr) {
+				manager = mgr
+				args = shebangArgs
+			} else if ext := filepath.Ext(remaining[0]); ext != "" {
 				if slices.Contains(constants.NodeExtensions, ext) {
 					if CmdExists("tsx") {
 						manager = "tsx"

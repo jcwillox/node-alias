@@ -94,6 +94,13 @@ n script.js              # Run any .js file
 n script.ts              # Run TypeScript files (using tsx or bun if available, or node if supported)
 ```
 
+Scripts with shebang lines are automatically detected and executed with the specified interpreter:
+
+```bash
+n script.sh              # Executes with bash if shebang is #!/bin/bash
+n script.py              # Uses shebang interpreter if present, otherwise falls back to uv or python
+```
+
 And Python files:
 
 ```bash
