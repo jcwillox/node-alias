@@ -10,11 +10,15 @@ import (
 )
 
 type Package struct {
-	Scripts          map[string]string
-	Dependencies     map[string]string
-	DevDependencies  map[string]string
-	PeerDependencies map[string]string
-	PackageManager   string
+	Scripts             map[string]string
+	Dependencies        map[string]string
+	DevDependencies     map[string]string
+	PeerDependencies    map[string]string
+	PackageManager      string
+	PatchedDependencies map[string]string
+	Pnpm                struct {
+		PatchedDependencies map[string]string
+	}
 }
 
 var GetPackageJson = sync.OnceValue(func() *Package {

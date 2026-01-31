@@ -3,14 +3,15 @@ package utils
 import (
 	"errors"
 	"fmt"
-	"github.com/spf13/cobra"
-	"golang.org/x/sys/execabs"
 	"os"
 	"os/signal"
 	"runtime"
 	"strings"
 	"syscall"
 	"time"
+
+	"github.com/spf13/cobra"
+	"golang.org/x/sys/execabs"
 )
 
 func logErr(err error) {
@@ -73,10 +74,12 @@ func RunAliasCommand(name string, alias string, args []string, remaining ...stri
 	}
 }
 
+// DefaultRunCommand passes through all arguments to the default package manager
 func DefaultRunCommand(cmd *cobra.Command, remaining []string) {
 	RunCommand(GetPackageManager(), []string{cmd.Use}, remaining...)
 }
 
+// RunScriptCommand passes through all arguments to the pm's run command
 func RunScriptCommand(cmd *cobra.Command, remaining []string) {
 	RunCommand(GetPackageManager(), []string{"run", cmd.Use}, remaining...)
 }

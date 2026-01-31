@@ -73,8 +73,9 @@ n list                   # List installed packages
 n ls                     # Same as list
 n run dev                # Run a npm script
 n r dev                  # Same as run
-n patch lodash           # Create a pnpm patch for a dependency
-n patch-commit path      # Commit a pnpm patch
+n patch lodash           # Create a patch for a dependency
+n patch-commit <path>    # Commit a patch
+n patch-remove pkg@1.2.3 # Remove a patch
 ```
 
 ### Smart Shortcuts
@@ -118,7 +119,7 @@ n script.py              # Run Python (using uv or python)
 b install                # Uses bun (requires `alias b="NODE_ALIAS_MANAGER=bun node-alias"`)
 ```
 
-### Shell Completions
+### Shell completions
 
 `node-alias` provides intelligent completions for multiple shells, for linux packages (deb, rpm, apk) these are built-in. Otherwise, up-to-date copies are located in the [completions/](./completions) directory.
 
@@ -130,3 +131,22 @@ node-alias completion [bash|zsh|fish|pwsh]
 
 You can write this to a file then source it in your shell configuration.
 
+Zsh
+
+```bash
+# copy and reload (ensure fpath+compinit in ~/.zshrc)
+mkdir -p ~/.local/share/zsh/site-functions
+cp completions/node-alias.zsh ~/.local/share/zsh/site-functions/
+source ~/.zshrc
+```
+
+PowerShell
+
+```powershell
+# copy and add dot-source to your profile (CurrentUserAllHosts)
+$dest = Join-Path $HOME ".config\powershell\Modules\node-alias"; New-Item -ItemType Directory -Force -Path $dest | Out-Null
+Copy-Item .\completions\node-alias.ps1 -Destination (Join-Path $dest "node-alias.ps1") -Force
+# then add: . "$HOME\.config\powershell\Modules\node-alias\node-alias.ps1" to your profile
+```
+
+That's it — copy the file from `completions/` and add the single config line shown above for your shell.
