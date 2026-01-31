@@ -90,6 +90,7 @@ func init() {
 		"approve-builds": "ab",
 		"publish":        "publish",
 		"pack":           "pack",
+		"patch-commit":   "patch-commit",
 	}
 
 	for use, alias := range commands {

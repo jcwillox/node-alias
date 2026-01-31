@@ -73,6 +73,8 @@ n list                   # List installed packages
 n ls                     # Same as list
 n run dev                # Run a npm script
 n r dev                  # Same as run
+n patch lodash           # Create a pnpm patch for a dependency
+n patch-commit path      # Commit a pnpm patch
 ```
 
 ### Smart Shortcuts
