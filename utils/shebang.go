@@ -33,8 +33,13 @@ func GetShebang(filePath string) (string, []string) {
 	args := parts[1:]
 
 	if runtime.GOOS == "windows" && manager == "/usr/bin/env" && len(args) > 0 {
-		manager = args[0]
-		args = args[1:]
+		if args[0] == "-S" {
+			manager = args[1]
+			args = args[2:]
+		} else {
+			manager = args[0]
+			args = args[1:]
+		}
 	}
 
 	return manager, args
