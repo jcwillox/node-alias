@@ -3,6 +3,7 @@ package utils
 import (
 	"bufio"
 	"os"
+	"path/filepath"
 	"runtime"
 	"strings"
 )
@@ -32,14 +33,17 @@ func GetShebang(filePath string) (string, []string) {
 	manager := parts[0]
 	args := parts[1:]
 
-	if runtime.GOOS == "windows" && manager == "/usr/bin/env" && len(args) > 0 {
-		if args[0] == "-S" {
-			manager = args[1]
-			args = args[2:]
-		} else {
-			manager = args[0]
-			args = args[1:]
+	if runtime.GOOS == "windows" {
+		if manager == "/usr/bin/env" && len(args) > 0 {
+			if args[0] == "-S" {
+				manager = args[1]
+				args = args[2:]
+			} else {
+				manager = args[0]
+				args = args[1:]
+			}
 		}
+		manager = filepath.FromSlash(manager)
 	}
 
 	return manager, args
