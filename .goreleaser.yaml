@@ -31,6 +31,8 @@ archives:
     format_overrides:
       - goos: windows
         formats: zip
+    files:
+      - completions/*
 
 nfpms:
   - file_name_template: '{{ replace .ProjectName "-" "_" }}_{{ .Version }}_{{ .Arch }}'
@@ -53,3 +55,43 @@ nfpms:
 
 checksum:
   name_template: 'checksums.txt'
+
+homebrew_casks:
+  - name: node-alias
+    homepage: https://github.com/jcwillox/node-alias
+    description: "A smart alias for all node package managers"
+    license: MIT
+    completions:
+      bash: completions/node-alias.bash
+      zsh: completions/node-alias.zsh
+      fish: completions/node-alias.fish
+    url:
+      template: "https://github.com/jcwillox/node-alias/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    commit_msg_template: "{{ .ProjectName }}: Update to version {{ .Version }}"
+    skip_upload: "{{ if .IsSnapshot }}true{{ end }}"
+    hooks:
+      post:
+        install: |
+          if OS.mac?
+            system_command "/usr/bin/xattr", args: ["-dr", "com.apple.quarantine", "#{staged_path}/node-alias"]
+          end
+    repository:
+      owner: jcwillox
+      name: homebrew-tap
+      branch: main
+      token: "{{ .Env.GORELEASER_PUBLISH_TOKEN }}"
+
+scoops:
+  - name: node-alias
+    homepage: https://github.com/jcwillox/node-alias
+    description: "A smart alias for all node package managers"
+    license: MIT
+    url_template: "https://github.com/jcwillox/node-alias/releases/download/{{ .Tag }}/{{ .ArtifactName }}"
+    commit_msg_template: "{{ .ProjectName }}: Update to version {{ .Version }}"
+    skip_upload: "{{ if .IsSnapshot }}true{{ end }}"
+    repository:
+      owner: jcwillox
+      name: scoop-bucket
+      branch: master
+      token: "{{ .Env.GORELEASER_PUBLISH_TOKEN }}"
+    directory: bucket

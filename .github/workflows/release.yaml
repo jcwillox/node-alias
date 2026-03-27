@@ -66,6 +66,7 @@ jobs:
         run: pnpm dlx @jcwillox/semantic-release-config
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GORELEASER_PUBLISH_TOKEN: ${{ secrets.GORELEASER_PUBLISH_TOKEN }}
           SEMANTIC_RELEASE_GITHUB_DRAFT: ${{ inputs.draft }}
           SEMANTIC_RELEASE_GITHUB_DISCUSSION: ${{ inputs.discussion }}
           SEMANTIC_RELEASE_FORCE_RELEASE: ${{ inputs.release_type }}

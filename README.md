@@ -30,6 +30,26 @@ Windows
 iwr -useb jcwillox.com/l/node-alias-ps1 | iex
 ```
 
+### Scoop (Windows)
+
+```powershell
+scoop bucket add jcwillox https://github.com/jcwillox/scoop-bucket
+scoop install jcwillox/node-alias
+```
+
+### Homebrew (macOS)
+
+```bash
+brew tap jcwillox/tap
+brew install --cask node-alias
+```
+
+Or install directly from the tapped cask:
+
+```bash
+brew install --cask jcwillox/tap/node-alias
+```
+
 ## Usage
 
 ### Set up an Alias
